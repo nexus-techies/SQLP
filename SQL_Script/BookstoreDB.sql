@@ -4,7 +4,7 @@ use Bookstore;
 -- drop database Bookstore;
 
 create table authors(
-	author_id varchar(20) not null primary key,
+	author_id varchar(20) primary key,
 	author_name varchar(20) not null,
 	author_email varchar(30) not null,
 	author_commission DOUBLE not null
@@ -20,7 +20,7 @@ insert into authors values ('A7', 'George Lucas', 'GeorgeLucas@gmail.com', 0.1);
 -- SELECT * from authors;
 
 create table books(
-	book_id varchar(20) not null primary key default 'B100',
+	book_id varchar(20) primary key,
 	book_name varchar(50) not null,
 	book_type varchar(20) not null,
 	author_id varchar(20) not null,
@@ -41,7 +41,7 @@ insert into books values ('B10', 'Star Wars', 'Science Fiction', 'A7' , 20 , 300
 -- SELECT * FROM books;
 
 create table bookstore(
-	store_id varchar(20) not null primary key,
+	store_id varchar(20) primary key default 'S1',
 	store_name varchar(30) not null,
 	store_address varchar(20) not null
 );
@@ -50,7 +50,7 @@ insert into bookstore(store_id, store_name, store_address ) values ('S1', 'Dave 
 -- SELECT * FROM bookstore;
 
 create table customers(
-	customer_id INT not null AUTO_INCREMENT primary key,
+	customer_id INT AUTO_INCREMENT primary key,
 	customer_name varchar(20) not null,
 	customer_address varchar(20) not null,
 	customer_phone varchar(20) not null
@@ -70,12 +70,12 @@ insert into customers(customer_name, customer_address, customer_phone) values ('
 
 
 create table orders(
-	order_id INT not null AUTO_INCREMENT primary key,
+	order_id INT AUTO_INCREMENT primary key,
     order_date DATETIME not null DEFAULT now(),
-	customer_id varchar(20) not null default 1000000,
-	book_id varchar(20) not null  default 'B100',
+	customer_id varchar(20) not null,
+	book_id varchar(20) not null,
 	store_id varchar(20) not null default 'S1',
-	order_quantity varchar(20) not null default 0
+	order_quantity INT not null default 0
 );
 
 insert into orders(customer_id, book_id, store_id, order_quantity) values (1, 'B3', 'S1' , 2);
