@@ -25,7 +25,8 @@ create table books(
 	book_type varchar(20) not null,
 	author_id varchar(20) not null,
 	book_price INT not null,
-	book_stock INT not null
+	book_stock INT not null,
+	FOREIGN KEY (author_id) REFERENCES authors(author_id)
 );
 
 insert into books(book_id, book_name, book_type, author_id, book_price, book_stock) values ('B1', 'Snow White', 'Romance', 'A1', 20, 500);
@@ -71,11 +72,14 @@ insert into customers(customer_name, customer_address, customer_phone) values ('
 
 create table orders(
 	order_id INT AUTO_INCREMENT primary key,
-    order_date DATETIME not null DEFAULT now(),
+    	order_date DATETIME not null DEFAULT now(),
 	customer_id varchar(20) not null,
 	book_id varchar(20) not null,
 	store_id varchar(20) not null default 'S1',
-	order_quantity INT not null default 0
+	order_quantity INT not null default 0,
+        FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+	FOREIGN KEY (book_id) REFERENCES books(book_id),
+	FOREIGN KEY (store_id) REFERENCES bookstore(store_id)
 );
 
 insert into orders(customer_id, book_id, store_id, order_quantity) values (1, 'B3', 'S1' , 2);
