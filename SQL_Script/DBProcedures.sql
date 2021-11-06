@@ -1,4 +1,6 @@
 
+
+
 DELIMITER //
 Create procedure view_available_books()
 begin
@@ -53,7 +55,7 @@ DELIMITER ;
 delimiter //
 create procedure disp_price(OUT b_price integer, IN b_name varchar(60) )  
                       begin 
-                      select (order_quantity * b_price) 
+                      select (order_quantity * b_price) into b_price
                          FROM order_placed where book_name = b_name;   
                       end; //
 delimiter ;
@@ -74,9 +76,31 @@ delimiter //
 create procedure AddCustomers(IN c_name varchar(60),IN c_address varchar(60), IN c_phone varchar(60), IN b_name VARCHAR(50), IN o_quantity INT)  
                       begin 
                       insert into customers set customer_name=c_name, customer_address=c_address, customer_phone=c_phone;
-                      insert into orders set customer_id= (select customer_id from customers where customer_name=c_name);
-                      insert into orders set book_id= (select book_id from books where book_name=b_name);
-                      insert into orders set order_quantity= o_quantity;
+					  insert into orders(customer_id, book_id, order_quantity) values((select customer_id from customers where customer_name=c_name), (select book_id from books where book_name=b_name),o_quantity);
+                      end; //
+delimiter ;
+
+
+delimiter //
+create procedure DeleteCustomers(IN c_name varchar(60))  
+                      begin 
+                      delete from orders where customer_id= (select customer_id from customers where customer_name=c_name);
+                      delete from customers where customer_name=c_name;
+                      end; //
+delimiter ;
+
+
+delimiter //
+create procedure UpdateCustomerAddress(IN c_name varchar(60),IN c_address varchar(60))  
+                      begin 
+                      update customers set customer_address=c_address where customer_name=c_name ;
+                      end; //
+delimiter ;
+
+delimiter //
+create procedure UpdateCustomerPhoneIN (IN c_name varchar(60), IN c_phone varchar(60))  
+                      begin 
+                      update customers set customer_phone=c_phone where customer_name=c_name ;
                       end; //
 delimiter ;
 
