@@ -1,7 +1,7 @@
 # SQLP
 SQLP_TermProject
 
-Topic: Student Database
+Topic: BookStore Database
 
 Work Done:
 1. Taking Database and create ER diagram
